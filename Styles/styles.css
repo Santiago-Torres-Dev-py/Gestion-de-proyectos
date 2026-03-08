@@ -1,0 +1,96 @@
+body{
+    font-family: 'poppins', sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 40px;
+}
+
+.contenedor_principal{
+    max-width: 900px;
+    margin: auto;
+}
+
+.titulo_1{
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.contenedor_2{
+    margin-top: 40px;
+}
+
+.contenedor_3{
+    margin-top: 40px;
+}
+input, select{
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button{
+    padding: 8px 12px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 5px;
+}
+
+button:hover{
+    background-color: #0056b3;
+}
+
+.button_1{
+    background: #28a745;
+}
+
+.button_2{
+    background: #dc3545;
+}
+
+.button_1:hover{
+    background: #218838;
+}
+.button_2:hover{
+    background: #c0392b;
+}
+
+.proyecto{
+    background: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.8);
+    transition: transform 0.2s;
+}
+
+.proyecto:hover{
+    transform: translateY(-3px);
+}
+.encabezado_proyecto{
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.encabezado_proyecto h3{
+    margin: 0;
+}
+
+.lista_miembros p,
+.lista_tareas p{
+    background: #f1f1f1;
+    padding: 6px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

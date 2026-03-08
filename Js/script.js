@@ -36,6 +36,11 @@ function crearProyecto(){
         alert("Escribe un nombre para el proyecto.");
         return;
     }
+    //Evita crear proyectos con el mismo nombre.
+    if(proyectos.some(p => p.nombre === nombreProyecto)){
+        alert("Ya existe un proyecto con ese nombre.");
+        return;
+    }
 
     //Crea objeto proyecto.
     const proyecto = {
@@ -126,8 +131,17 @@ function agregarTarea(indiceProyecto){
 function mostrarProyectos(){
     const contenedor = document.getElementById("div_proyectos");
 
-    //Limpia el contenedor
-    contenedor.innerHTML = "<h2 class='subtitulo_2'>Proyectos:</h2>";
+    //Limpia el contenedor antes de mostrar los proyectos.
+    contenedor.innerHTML = `<h2 class="subtitulo_2">Proyectos:</h2>`;
+
+    //Si no hay proyectos, muestra un mensaje.
+    if(proyectos.length === 0){
+        contenedor.innerHTML = `
+        <h2 class="subtitulo_2">Proyectos:</h2>
+        <p>No hay proyectos creados.</p>
+        `;
+        return;
+    }
 
     //Recorre los proyectos.
     proyectos.forEach(function(proyecto, indice){
@@ -161,8 +175,10 @@ function mostrarProyectos(){
         });
 
         nuevoProyecto.innerHTML = `
-        <h3>${proyecto.nombre}</h3>
-        <button onclick="eliminarProyecto(${indice})">X</button>
+        <div class="encabezado_proyecto">
+            <h3>${proyecto.nombre}</h3>
+            <button onclick="eliminarProyecto(${indice})">X</button>
+        </div>
 
         <h4>Miembros</h4>
 
