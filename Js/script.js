@@ -72,6 +72,11 @@ function agregarMiembro(indiceProyecto){
     return;
     }
 
+    if(proyectos[indiceProyecto].miembros.includes(nombreMiembro)){
+    alert("Ese miembro ya existe.");
+    return;
+    }
+
     proyectos[indiceProyecto].miembros.push(nombreMiembro);
 
     guardarProyectos();
@@ -87,6 +92,11 @@ function agregarTarea(indiceProyecto){
     const selectResponsable = document.getElementById("select_responsable_" + indiceProyecto);
     const nombreTarea = inputTarea.value;
     const responsable = selectResponsable.value;
+
+    if(proyectos[indiceProyecto].miembros.length === 0){
+    alert("Primero agrega miembros al proyecto");
+    return;
+    }
 
     if(nombreTarea.trim() === ""){
         alert("Escribe una tarea.");
@@ -126,8 +136,13 @@ function mostrarProyectos(){
         nuevoProyecto.classList.add("proyecto");
 
         let htmlMiembros = "";
-        proyecto.miembros.forEach(function(miembro){
-            htmlMiembros += `<p>${miembro}</p>`;
+        proyecto.miembros.forEach(function(miembro, indexMiembro){
+            htmlMiembros += `
+            <p>
+            ${miembro} 
+            <button onclick="eliminarMiembro(${indice}, ${indexMiembro})">X</button>
+            </p>
+            `;
         });
         
         let opcionesMiembros = "";
@@ -136,8 +151,13 @@ function mostrarProyectos(){
         });
 
         let htmlTareas = "";
-        proyecto.tareas.forEach(function(tarea){
-            htmlTareas += `<p>${tarea.nombre} - ${tarea.responsable}</p>`;
+        proyecto.tareas.forEach(function(tarea, indexTarea){
+            htmlTareas += `
+            <p>
+            ${tarea.nombre} - ${tarea.responsable}
+            <button onclick="eliminarTarea(${indice}, ${indexTarea})">X</button>
+            </p>
+            `;
         });
 
         nuevoProyecto.innerHTML = `
@@ -189,7 +209,32 @@ function mostrarProyectos(){
 
 //Elimina el proyecto en especifico.
 function eliminarProyecto(indice){
+
+    if(!confirm("¿Eliminar este proyecto?")){
+        return;
+    }
+
     proyectos.splice(indice, 1);
+
+    guardarProyectos();
+
+    mostrarProyectos();
+}
+
+//Elimina miembros en especifico.
+function eliminarMiembro(indiceProyecto, indiceMiembro){
+
+    proyectos[indiceProyecto].miembros.splice(indiceMiembro, 1);
+
+    guardarProyectos();
+
+    mostrarProyectos();
+}
+
+//Elimina Tareas en especifico.
+function eliminarTarea(indiceProyecto, indiceTarea){
+
+    proyectos[indiceProyecto].tareas.splice(indiceTarea, 1);
 
     guardarProyectos();
 
