@@ -33,7 +33,7 @@ function crearProyecto(){
     
     //Evita darle al botón con el input vació.
     if(nombreProyecto.trim() === ""){
-        alert("Escribe un nombre para el proyecto.")
+        alert("Escribe un nombre para el proyecto.");
         return;
     }
 
@@ -68,7 +68,7 @@ function agregarMiembro(indiceProyecto){
     const nombreMiembro = input.value;
 
     if(nombreMiembro.trim() === ""){
-        alert("Escribe un nombre.")
+        alert("Escribe un nombre.");
     return;
     }
 
@@ -81,6 +81,37 @@ function agregarMiembro(indiceProyecto){
     input.value = "";
 }
 
+//Agrega tareas a los proyectos.
+function agregarTarea(indiceProyecto){
+    const inputTarea = document.getElementById("input_tarea_" + indiceProyecto);
+    const selectResponsable = document.getElementById("select_responsable_" + indiceProyecto);
+    const nombreTarea = inputTarea.value;
+    const responsable = selectResponsable.value;
+
+    if(nombreTarea.trim() === ""){
+        alert("Escribe una tarea.");
+        return;
+    }
+
+    if(responsable.trim() === ""){
+        alert("Seleccione un responsable.");
+        return;
+    }
+
+    const tarea = {
+        nombre: nombreTarea,
+        responsable: responsable
+    };
+
+    proyectos[indiceProyecto].tareas.push(tarea);
+
+    guardarProyectos();
+
+    mostrarProyectos();
+
+    inputTarea.value = "";
+}
+
 //Muestra proyectos en pantalla.
 function mostrarProyectos(){
     const contenedor = document.getElementById("div_proyectos");
@@ -90,12 +121,23 @@ function mostrarProyectos(){
 
     //Recorre los proyectos.
     proyectos.forEach(function(proyecto, indice){
+
         const nuevoProyecto = document.createElement("div");
         nuevoProyecto.classList.add("proyecto");
 
         let htmlMiembros = "";
         proyecto.miembros.forEach(function(miembro){
             htmlMiembros += `<p>${miembro}</p>`;
+        });
+        
+        let opcionesMiembros = "";
+        proyecto.miembros.forEach(function(miembro){
+            opcionesMiembros += `<option value="${miembro}">${miembro}</option>`;
+        });
+
+        let htmlTareas = "";
+        proyecto.tareas.forEach(function(tarea){
+            htmlTareas += `<p>${tarea.nombre} - ${tarea.responsable}</p>`;
         });
 
         nuevoProyecto.innerHTML = `
@@ -117,6 +159,27 @@ function mostrarProyectos(){
         <div class="lista_miembros">
             ${htmlMiembros}
         </div>
+
+        <h4>Tareas</h4>
+
+        <input
+            type="text"
+            id="input_tarea_${indice}"
+            placeholder="Nombre de la tarea"
+        >
+
+        <select id="select_responsable_${indice}">
+            <option value="">Seleccionar responsable</option>
+            ${opcionesMiembros}
+        </select>
+
+        <button onclick="agregarTarea(${indice})">
+            Agregar tarea
+        </button>
+
+        <div class="lista_tareas">
+            ${htmlTareas}
+        </div>
         `;
 
         contenedor.appendChild(nuevoProyecto);
@@ -132,6 +195,7 @@ function eliminarProyecto(indice){
 
     mostrarProyectos();
 }
+
 //Borra los datos del localStorage.
 function borrarProyectos(){
     if(confirm("¿Seguro que quiere borrar todos los proyectos?")){
